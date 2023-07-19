@@ -1,0 +1,10 @@
+[Unit]
+After=network.service
+
+[Service]
+WorkingDirectory=/home/YOUR_USER/
+ExecStart=/usr/bin/python3 /home/YOUR_USER/scheduled.py
+Restart=always
+
+[Install]
+WantedBy=default.target
