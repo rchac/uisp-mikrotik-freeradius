@@ -13,9 +13,9 @@ def handler(signum, frame):
 	raise Exception("Function took over 660 seconds to complete.")
 
 def updateRadiusHandler():
-	#signal.signal(signal.SIGALRM, handler)
-	#secondThreshold = (60*10) + 60
-	#signal.alarm(secondThreshold)
+	signal.signal(signal.SIGALRM, handler)
+	secondThreshold = (60*2)
+	signal.alarm(secondThreshold)
 	try:
 		updateRadius()
 		print("Successfully ran updateRadius at " + datetime.now().strftime("%d/%m/%Y"))
@@ -23,9 +23,9 @@ def updateRadiusHandler():
 		print("Failed to run updateRadius at " + datetime.now().strftime("%d/%m/%Y"))
 
 def getIPv6FromMACHandler():
-	#signal.signal(signal.SIGALRM, handler)
-	#secondThreshold = (60*10) + 60
-	#signal.alarm(secondThreshold)
+	signal.signal(signal.SIGALRM, handler)
+	secondThreshold = (60*2)
+	signal.alarm(secondThreshold)
 	try:
 		pullMikrotikIPv6()
 		print("Successfully ran pullMikrotikIPv6 at " + datetime.now().strftime("%d/%m/%Y"))
@@ -33,12 +33,17 @@ def getIPv6FromMACHandler():
 		print("Failed to run pullMikrotikIPv6 at " + datetime.now().strftime("%d/%m/%Y"))
 
 if __name__ == '__main__':
-	ads = BlockingScheduler(executors={'default': ThreadPoolExecutor(1)})
 	
-	updateRadiusHandler()
+	#ads = BlockingScheduler(executors={'default': ThreadPoolExecutor(1)})
+	
+	#updateRadiusHandler()
 	#getIPv6FromMACHandler()
 	
-	ads.add_job(updateRadiusHandler, 'interval', minutes=30, max_instances=1)
+	while(True):
+		getIPv6FromMACHandler()
+		updateRadiusHandler()
+		time.sleep(60*10)
+	#ads.add_job(updateRadiusHandler, 'interval', minutes=30, max_instances=1)
 	#ads.add_job(getIPv6FromMACHandler, 'interval', minutes=5)
 
-	ads.start()
+	#ads.start()
