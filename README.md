@@ -31,6 +31,14 @@ add action=drop chain=forward out-interface-list=WAN src-address-list=\
 ```
 Make sure WAN corresponds to an appropriate WAN interface list on your MikroTik Edge
 
+## Requirements
+- A self-hosted UISP instance (not hosted by Ubiquiti)
+- A VM to run this on, running Ubuntu Server 22.04 or more recent. 
+- FreeRadius installed on the same VM
+- A MikroTik Edge Router (to block suspended IPs, do NAT)
+- 1 or more MikroTik routers acting as your DHCP server
+- MikroTik ROS on these routers can be v6 or v7
+
 ## Settings
 Modify configFile.py to match your network and UISP settings.
 
