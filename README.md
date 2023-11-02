@@ -1,9 +1,26 @@
 # UISP MikroTik & FreeRadius Integration Script
 
+This script allows Internet Service Providers which use UISP to suspend client traffic transiting their MikroTik routers.
+It also allows for restricting DHCP leases to only the equipment IPs of known customers.
+
+## Purpose
+This is primarily meant to be a starting point for your own integration. It assumes certain things like that you have a dual stack IPv4/IPv6 network.
+You can modify the code to suit your needs.
+
+## Requirements
+- A self-hosted UISP instance (not hosted by Ubiquiti)
+- A VM to run this on, running Ubuntu Server 22.04 or more recent. 
+- FreeRadius installed on the same VM
+- A MikroTik Edge Router (to block suspended IPs, do NAT)
+- 1 or more MikroTik routers acting as your DHCP server
+- MikroTik ROS on these routers can be v6 or v7
+
+## Overview
+
 ## How it works
 
 This script pulls customer IP addresses from UISP.
-Customers in good standing have their corresponding equipment MAC addresses added to FreeRadius' allowed MAC addresses.
+Customer equipment MAC addresses are added to FreeRadius' allowed MAC addresses.
 This allows you to do basic DHCP auth to prevent unauthorized DHCP leases.
 You would toggle the radius option for your DHCP server and enable radius for the mikrotiks that hand out your DHCP leases.
 Define your DHCP server mikrotiks in ```mikrotikDHCPRouterList.csv```
@@ -30,14 +47,6 @@ add action=drop chain=forward out-interface-list=WAN src-address-list=\
     uisp_suspended
 ```
 Make sure WAN corresponds to an appropriate WAN interface list on your MikroTik Edge
-
-## Requirements
-- A self-hosted UISP instance (not hosted by Ubiquiti)
-- A VM to run this on, running Ubuntu Server 22.04 or more recent. 
-- FreeRadius installed on the same VM
-- A MikroTik Edge Router (to block suspended IPs, do NAT)
-- 1 or more MikroTik routers acting as your DHCP server
-- MikroTik ROS on these routers can be v6 or v7
 
 ## Settings
 Modify configFile.py to match your network and UISP settings.
