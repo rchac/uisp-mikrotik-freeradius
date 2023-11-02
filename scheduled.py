@@ -5,8 +5,6 @@ from uispRadius import updateRadius
 from getIPv6 import pullMikrotikIPv6
 import warnings
 import signal
-from apscheduler.schedulers.background import BlockingScheduler
-from apscheduler.executors.pool import ThreadPoolExecutor
 
 def handler(signum, frame):
 	#print("Function took over 20 seconds to complete.")
@@ -33,17 +31,8 @@ def getIPv6FromMACHandler():
 		print("Failed to run pullMikrotikIPv6 at " + datetime.now().strftime("%d/%m/%Y"))
 
 if __name__ == '__main__':
-	
-	#ads = BlockingScheduler(executors={'default': ThreadPoolExecutor(1)})
-	
-	#updateRadiusHandler()
-	#getIPv6FromMACHandler()
-	
+
 	while(True):
 		getIPv6FromMACHandler()
 		updateRadiusHandler()
 		time.sleep(60*10)
-	#ads.add_job(updateRadiusHandler, 'interval', minutes=30, max_instances=1)
-	#ads.add_job(getIPv6FromMACHandler, 'interval', minutes=5)
-
-	#ads.start()
