@@ -4,8 +4,9 @@
 
 This script pulls customer IP addresses from UISP.
 Customers in good standing have their corresponding equipment MAC addresses added to FreeRadius' allowed MAC addresses.
-This allows you to do basic DCHP auth to prevent unauthorized DHCP leases. You would toggle the radius option for your DHCP server and enable radius for the mikrotik that hands out your DHCP leases.
-Define your DHCP server mikrotiks in mikrotikDHCPRouterList.csv
+This allows you to do basic DHCP auth to prevent unauthorized DHCP leases.
+You would toggle the radius option for your DHCP server and enable radius for the mikrotiks that hand out your DHCP leases.
+Define your DHCP server mikrotiks in ```mikrotikDHCPRouterList.csv```
 For suspended customers, their corresponding IP addresses are added to a MikroTik firewall list "uisp_suspended".
 
 Suspended clients will have traffic redirected to your UISP instance IP address via this NAT rule.
